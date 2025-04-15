@@ -11,8 +11,9 @@ namespace astro
 	public:
 		Object() = default;
 		virtual ~Object() = default;
+		virtual ObjectID GetID() const = 0;
 
-		void AddComponent(Component* comp)
+		void AddComponent(std::shared_ptr<Component> comp)
 		{
 			for (const auto& component : components)
 			{
@@ -22,7 +23,7 @@ namespace astro
 				}
 			}
 
-			components.push_back(std::unique_ptr<Component>(comp));
+			components.push_back(comp);
 		}
 
 		template <typename T>
@@ -41,6 +42,6 @@ namespace astro
 		}
 
 	private:
-		std::vector<std::unique_ptr<Component>> components;
+		std::vector<std::shared_ptr<Component>> components;
 	};
 }

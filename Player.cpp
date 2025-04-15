@@ -1,13 +1,16 @@
 #include "Player.h"
 #include "Component.h"
 #include <cmath> 
+#include <memory> 
 
 namespace astro
 {
 	Player::Player(const MyVector2& position)
 	{
-		Object::AddComponent(new TransformComponent(position));
-		Object::AddComponent(new RenderComponent());
+		Object::AddComponent(std::make_shared<TransformComponent>(position));
+		Object::AddComponent(std::make_shared<RenderComponent>());
+		Object::AddComponent(std::make_shared<InputComponent>());
+		Object::AddComponent(std::make_shared<MoveComponent>(MyVector2{0.f, 0.f}, 0.f));
 	}
 
 	void Player::Init()
@@ -58,9 +61,6 @@ namespace astro
 			points.push_back(position + MyVector2{ size * std::cosf(angle), size * std::sinf(angle) });
 			points.push_back(position + MyVector2{ size * std::cosf(angle + 120.0f * deg_to_rad), size * std::sinf(angle + 120.0f * deg_to_rad) });
 			points.push_back(position + MyVector2{ size * std::cosf(angle + 240.0f * deg_to_rad), size * std::sinf(angle + 240.0f * deg_to_rad) });
-
-			//DrawTriangle(points[0], points[2], points[1], BLACK);
-			DrawTriangleLines(points[0], points[2], points[1], WHITE);
 		}
 
 	}

@@ -40,4 +40,30 @@ namespace astro
 
 		std::vector<MyVector2> points;
 	};
+
+	struct InputComponent : public Component
+	{
+		InputComponent() { }
+
+		ComponentID GetID() override 
+		{ 
+			return ComponentID::INPUT_COMPONENT;
+		}
+	};
+
+	struct MoveComponent : public Component
+	{
+		MoveComponent(const MyVector2& direction = {0, 0}, const float& speed = 0.f)
+			: direction(direction)
+			, speed(speed)
+		{ }
+
+		ComponentID GetID() override 
+		{ 
+			return ComponentID::MOVE_COMPONENT;
+		}
+
+		MyVector2 direction{ 0, 0 };
+		float speed = 0.f;
+	};
 }

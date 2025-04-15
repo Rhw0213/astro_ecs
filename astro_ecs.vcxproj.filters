@@ -28,11 +28,14 @@
     <Filter Include="소스 파일\System">
       <UniqueIdentifier>{ae12ad41-f167-4773-a5dd-5abd35793503}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Input">
+      <UniqueIdentifier>{6a78e6c8-3099-4997-b05d-a71eb35aa70f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game">
+      <UniqueIdentifier>{a5431b44-01de-4e70-b389-26677a89b85a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>소스 파일\Scene</Filter>
     </ClInclude>
@@ -51,6 +54,24 @@
     <ClInclude Include="GameObject.h">
       <Filter>소스 파일\Object</Filter>
     </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>소스 파일\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveSystem.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -59,8 +80,17 @@
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveSystem.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

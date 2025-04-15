@@ -8,8 +8,11 @@ namespace astro
 	{
 	public:
 		GameObject() = default;
+		virtual ~GameObject() = default;
+
 		virtual void Init() = 0;
 		virtual void Update() = 0;
-		virtual ~GameObject() = default;
+
+		ObjectID GetID() const override { return ObjectID::GAMEOBJECT_ID; };
 	};
 }

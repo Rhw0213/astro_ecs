@@ -11,7 +11,14 @@ namespace astro
 	{
 		TRANSFORM_COMPONENT,
 		RENDER_COMPONENT,
-		MOVE_COMPONENT
+		MOVE_COMPONENT,
+		INPUT_COMPONENT
+	};
+
+	enum ObjectID
+	{
+		GAMEOBJECT_ID,
+		PLAYER_ID,
 	};
 
 	struct MyVector2 
