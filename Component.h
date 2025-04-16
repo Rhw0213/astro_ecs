@@ -53,9 +53,10 @@ namespace astro
 
 	struct MoveComponent : public Component
 	{
-		MoveComponent(const MyVector2& direction = {0, 0}, const float& speed = 0.f)
+		MoveComponent(const MyVector2& direction = { 0, 0 }, const float& speed = 0.f, const MyVector2& slowVelocity = { 0, 0 })
 			: direction(direction)
 			, speed(speed)
+			, slowVelocity(slowVelocity)
 		{ }
 
 		ComponentID GetID() override 
@@ -64,6 +65,25 @@ namespace astro
 		}
 
 		MyVector2 direction{ 0, 0 };
+		MyVector2 slowVelocity{ 0, 0 };
 		float speed = 0.f;
+	};
+
+	struct EffectComponent : public Component
+	{
+		EffectComponent(int bright = 0.f, float twinkle = 0.f)
+			: bright(bright)
+			, twinkle(twinkle)
+			, time(0.f)
+		{ }
+
+		ComponentID GetID() override 
+		{ 
+			return ComponentID::EFFECT_COMPONENT;
+		}
+
+		int bright = 0;
+		float twinkle = 0.f;
+		float time = 0.f;
 	};
 }

@@ -18,14 +18,20 @@ namespace astro
 				{
 
 					MyVector2& position = transformComponent->position;
-					MyVector2& direction = transformComponent->direction;
-					const MyVector2& moveDirection = moveComponent->direction;
+					const MyVector2& moveDirection = moveComponent->direction.Normalize();
 					const float& speed = moveComponent->speed;
-			
-					direction += moveDirection;
-					direction = direction.Normalize();
+					MyVector2& slowVelocity = moveComponent->slowVelocity;
+					
+					if (speed <= 0.1f)
+					{
+						slowVelocity *= 0.95f;
+					}
+					else
+					{
+						slowVelocity = moveDirection * speed * GetFrameTime();
+					}
 
-					position += (direction * speed);
+					position += slowVelocity;
 				}
 			}
 		}

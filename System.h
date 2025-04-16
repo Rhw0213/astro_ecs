@@ -13,7 +13,7 @@ namespace astro
 
 		virtual void Process() = 0;
 
-		void RegisterComponent(std::shared_ptr<Object> object)
+		void RegisterObject(std::shared_ptr<Object> object)
 		{
 			for (const auto& obj : objects)
 			{

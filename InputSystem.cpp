@@ -9,33 +9,46 @@ namespace astro
 		{
 			if (object && object.get()->GetID() == ObjectID::PLAYER_ID)
 			{
-				size_t key = GetKeyPressed();
-				
-				if (key > 0)
+				auto* moveComponent = object.get()->GetComponent<MoveComponent>(ComponentID::MOVE_COMPONENT);
+				auto* transformComponent = object.get()->GetComponent<TransformComponent>(ComponentID::TRANSFORM_COMPONENT);
+
+				MyVector2& position = transformComponent->position;
+				MyVector2& direction = transformComponent->direction;
+				MyVector2& moveDirection = moveComponent->direction;
+			
+				const MyVector2& mousePosition = GetMousePosition();
+				direction = position.DirectionTo(mousePosition);
+
+				if (moveComponent)
 				{
-					auto* moveComponent = object.get()->GetComponent<MoveComponent>(ComponentID::MOVE_COMPONENT);
+					MyVector2 move = { 0, 0 };
+					moveComponent->speed = 0.f;
 
-					if (moveComponent)
+					if (IsKeyDown(KEY_W))
 					{
-						moveComponent->speed = 1.f;
-
-						if (key == KEY_W)
-						{
-							moveComponent->direction = { 0, -1 };
-						}
-						else if (key == KEY_A)
-						{
-							moveComponent->direction = { -1, 0 };
-						}
-						else if (key == KEY_D)
-						{
-							moveComponent->direction = { 1, 0 };
-						}
-						else if (key == KEY_S)
-						{
-							moveComponent->direction = { 0, 1 };
-						}
+						moveComponent->speed = 500.f;
+						move += { direction.x(), direction.y() };
 					}
+
+					if (IsKeyDown(KEY_A))
+					{
+						moveComponent->speed = 300.f;
+						move += { direction.y(), -direction.x() };
+					}
+
+					if (IsKeyDown(KEY_D))
+					{
+						moveComponent->speed = 300.f;
+						move += { -direction.y(), direction.x() };
+					}
+
+					if (IsKeyDown(KEY_S))
+					{
+						moveComponent->speed = 200.f;
+						move += { -direction.x(), -direction.y() };
+					}
+					 
+					moveDirection = move;
 				}
 			}
 		}

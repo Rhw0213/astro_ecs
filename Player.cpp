@@ -10,7 +10,7 @@ namespace astro
 		Object::AddComponent(std::make_shared<TransformComponent>(position));
 		Object::AddComponent(std::make_shared<RenderComponent>());
 		Object::AddComponent(std::make_shared<InputComponent>());
-		Object::AddComponent(std::make_shared<MoveComponent>(MyVector2{0.f, 0.f}, 0.f));
+		Object::AddComponent(std::make_shared<MoveComponent>());
 	}
 
 	void Player::Init()

@@ -1,6 +1,8 @@
 #pragma once
 #include "raylib.h"
+#include "Random.h"
 #include <cmath>
+#include <random>
 
 namespace astro
 {
@@ -12,13 +14,15 @@ namespace astro
 		TRANSFORM_COMPONENT,
 		RENDER_COMPONENT,
 		MOVE_COMPONENT,
-		INPUT_COMPONENT
+		INPUT_COMPONENT,
+		EFFECT_COMPONENT
 	};
 
 	enum ObjectID
 	{
 		GAMEOBJECT_ID,
 		PLAYER_ID,
+		STAR_ID,
 	};
 
 	struct MyVector2 
@@ -60,6 +64,12 @@ namespace astro
 			return *this;
 		}
 
+		MyVector2& operator*=(float scalar){
+			vec.x *= scalar;
+			vec.y *= scalar;
+			return *this;
+		}
+
 		MyVector2 DirectionTo(const MyVector2& target) const {
 			return (target - *this).Normalize(); // 이름 변경 및 정규화
 		}
@@ -84,3 +94,4 @@ namespace astro
 		const float& y() const { return vec.y; }
 	};
 }
+

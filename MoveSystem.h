@@ -8,5 +8,6 @@ namespace astro
 	{
 	public:
 		void Process() override;
+	private:
 	};
 }
