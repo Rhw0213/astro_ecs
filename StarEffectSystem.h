@@ -6,10 +6,10 @@
 
 namespace astro
 {
-	class EffectSystem : public System
+	class StarEffectSystem : public System
 	{
 	public:
-		EffectSystem() = default;
+		StarEffectSystem() = default;
 		void Process() override;
 
 	public:

@@ -9,6 +9,15 @@ namespace astro
 
 		for (const auto& object: objects)
 		{
+			//Camera
+			auto* cameraComponent = object.get()->GetComponent<CameraComponent>(ComponentID::CAMERA_COMPONENT);
+			if (cameraComponent)
+			{
+				Camera2D& camera = cameraComponent->camera;
+				BeginMode2D(camera);
+			}
+
+			//Object
 			if (object)
 			{
 				auto& points = object.get()->GetComponent<RenderComponent>(ComponentID::RENDER_COMPONENT)->points;
@@ -45,15 +54,34 @@ namespace astro
 					auto* effectComponent = object.get()->GetComponent<EffectComponent>(ComponentID::EFFECT_COMPONENT);
 					size_t bright = effectComponent->bright;
 
-					for (const auto& point : points)
+					enum DrawIndex
 					{
-						DrawCircle(static_cast<int>(point.x()), 
-									static_cast<int>(point.y()), transform->size, {255,255,255,(unsigned char)bright});
+						CIRCLE = 0,
+						LINE,
+					};
+
+					size_t pointsSize = points.size() == 1 ? 1 : points.size() - 1;
+
+					for (size_t i = 0; i < pointsSize; i++)
+					{
+						if (i == CIRCLE)
+						{
+							DrawCircle(static_cast<int>(points[i].x()),
+								static_cast<int>(points[i].y()), transform->size, { 255,255,255,(unsigned char)bright });
+						}
+						else if (i == LINE)
+						{
+							DrawLine(static_cast<int>(points[i].x()),
+								static_cast<int>(points[i].y()),
+								static_cast<int>(points[i + 1].x()),
+								static_cast<int>(points[i + 1].y()), WHITE);
+						}
 					}
 				}
 			}
 		}
 
+		EndMode2D();
 		EndDrawing();
 	}
 }

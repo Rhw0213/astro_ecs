@@ -7,8 +7,6 @@ namespace astro
     {
         static std::random_device rd;
         static std::mt19937 gen;
-        static std::uniform_real_distribution<float> randPosX;
-        static std::uniform_real_distribution<float> randPosY;
         static std::uniform_int_distribution<int> randBright;
         static std::uniform_real_distribution<float> randTwinkle;
         static std::uniform_real_distribution<float> randSize;

@@ -24,48 +24,32 @@ namespace astro
 		renderSystem.RegisterObject(player);
 		moveSystem.RegisterObject(player);
 		inputSystem.RegisterObject(player);
+		cameraSystem.RegisterObject(player);
 
 		// STAR
 		starManager = std::make_unique<ObjectManager>();
 		for (int i = 0; i < 200; i++)
 		{
 			std::shared_ptr<Star> star = starManager->CreateObject<Star>();
-			effectSystem.RegisterObject(star);
+			starEffectSystem.RegisterObject(star);
 			moveSystem.RegisterObject(star);
 			renderSystem.RegisterObject(star);
 		}
 		starManager->Init();
-
-        //for (int i = 0; i < 200; i++)
-        //{
-        //    std::shared_ptr<Star> star = std::make_shared<Star>(
-        //        MyVector2
-		//		{
-		//			backgroundSystem.randPosX(backgroundSystem.gen), 
-		//			backgroundSystem.randPosY(backgroundSystem.gen)
-		//		},
-        //        backgroundSystem.randBright(backgroundSystem.gen),
-        //        backgroundSystem.randTwinkle(backgroundSystem.gen),
-		//		backgroundSystem.randSize(backgroundSystem.gen)
-        //    );
-		//	star.get()->Init();
-		//	renderSystem.RegisterObject(star);
-		//	moveSystem.RegisterObject(star);
-        //}
-
 	}
 
 	void Game::Run()
 	{
 		while (!WindowShouldClose())
 		{
-			player->Update();
-			starManager->Update();
-
 			inputSystem.Process();
 			moveSystem.Process();
-			effectSystem.Process();
+			starEffectSystem.Process();
+			cameraSystem.Process();
 			renderSystem.Process();
+
+			player->Update();
+			starManager->Update();
 		}
 	}
 }

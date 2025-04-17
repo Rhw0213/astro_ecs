@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Component.h"
+#include "PlayerState.h"
 #include <cmath> 
-#include <memory> 
 
 namespace astro
 {
@@ -11,23 +11,33 @@ namespace astro
 		Object::AddComponent(std::make_shared<RenderComponent>());
 		Object::AddComponent(std::make_shared<InputComponent>());
 		Object::AddComponent(std::make_shared<MoveComponent>());
+		Object::AddComponent(std::make_shared<CameraComponent>());
 	}
 
 	void Player::Init()
 	{
 		auto* render = Object::GetComponent<RenderComponent>(ComponentID::RENDER_COMPONENT);
 		auto* transform = Object::GetComponent<TransformComponent>(ComponentID::TRANSFORM_COMPONENT);
+		auto& camera = Object::GetComponent<CameraComponent>(ComponentID::CAMERA_COMPONENT)->camera;
 
 		if (transform && render)
 		{
 			transform->direction = { 0, -1 };
 			transform->size = 50;
 			render->points.reserve(3);
+
+			camera.offset = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
+			camera.rotation = 0.f;
+			camera.target = transform->position;
+			camera.zoom = 1.f;
 		}
+
+		PlayerState::Instance().Update(shared_from_this());
 	}
 
 	void Player::Update()
 	{
+		PlayerState::Instance().Update(shared_from_this());
 		CalculationTransform();
 	}
 

@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -42,6 +38,9 @@
     </Filter>
     <Filter Include="소스 파일\Random">
       <UniqueIdentifier>{3294c6af-495a-4775-a128-2d12773c60c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\State">
+      <UniqueIdentifier>{293c2880-cdb4-4a4f-9ea3-a7fcc8e428fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,7 +77,7 @@
     <ClInclude Include="Game.h">
       <Filter>소스 파일\Game</Filter>
     </ClInclude>
-    <ClInclude Include="EffectSystem.h">
+    <ClInclude Include="StarEffectSystem.h">
       <Filter>소스 파일\System</Filter>
     </ClInclude>
     <ClInclude Include="Star.h">
@@ -92,6 +91,18 @@
     </ClInclude>
     <ClInclude Include="Random.h">
       <Filter>소스 파일\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraSystem.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="IService.h">
+      <Filter>소스 파일\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraState.h">
+      <Filter>소스 파일\State</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>소스 파일\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -110,7 +121,7 @@
     <ClCompile Include="Game.cpp">
       <Filter>소스 파일\Game</Filter>
     </ClCompile>
-    <ClCompile Include="EffectSystem.cpp">
+    <ClCompile Include="StarEffectSystem.cpp">
       <Filter>소스 파일\System</Filter>
     </ClCompile>
     <ClCompile Include="Star.cpp">
@@ -119,11 +130,14 @@
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일\Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>소스 파일\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraSystem.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>소스 파일\Object</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -4,7 +4,8 @@
 #include "RenderSystem.h"
 #include "MoveSystem.h"
 #include "InputSystem.h"
-#include "EffectSystem.h"
+#include "StarEffectSystem.h"
+#include "CameraSystem.h"
 #include "ObjectManager.h"
 #include <memory> 
 
@@ -25,6 +26,7 @@ namespace astro
 		RenderSystem renderSystem;
 		MoveSystem moveSystem;
 		InputSystem inputSystem;
-		EffectSystem effectSystem;
+		StarEffectSystem starEffectSystem;
+		CameraSystem cameraSystem;
 	};
 }

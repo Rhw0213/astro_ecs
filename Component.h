@@ -1,6 +1,7 @@
 #pragma once
 #include "Common.h"
 #include <vector> 
+#include "raylib.h" 
 
 namespace astro
 {
@@ -85,5 +86,22 @@ namespace astro
 		int bright = 0;
 		float twinkle = 0.f;
 		float time = 0.f;
+	};
+
+	struct CameraComponent : public Component
+	{
+		CameraComponent(const MyVector2& offset = {0,0},
+						const MyVector2& target = {0,0},
+						float rotation = 0.f,
+						float zoom = 0.f)
+			: camera{ offset, target, rotation, zoom }
+		{ }
+
+		ComponentID GetID() override 
+		{ 
+			return ComponentID::CAMERA_COMPONENT;
+		}
+
+		Camera2D camera;
 	};
 }
