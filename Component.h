@@ -76,6 +76,8 @@ namespace astro
 			: bright(bright)
 			, twinkle(twinkle)
 			, time(0.f)
+			, distanceDepth(0.f)
+			, maxSize(0.f)
 		{ }
 
 		ComponentID GetID() override 
@@ -86,6 +88,8 @@ namespace astro
 		int bright = 0;
 		float twinkle = 0.f;
 		float time = 0.f;
+		float distanceDepth = 0.f;
+		float maxSize = 0.f;
 	};
 
 	struct CameraComponent : public Component
@@ -93,7 +97,7 @@ namespace astro
 		CameraComponent(const MyVector2& offset = {0,0},
 						const MyVector2& target = {0,0},
 						float rotation = 0.f,
-						float zoom = 0.f)
+						float zoom = 1.f)
 			: camera{ offset, target, rotation, zoom }
 		{ }
 

@@ -9,6 +9,9 @@ namespace astro
 	static const int SCREEN_WIDTH = 1200;
 	static const int SCREEN_HEIGHT = 800;
 
+	static const float MIN_STAR_SIZE = 1.0f; // 실제 최소 크기 설정
+	static const float MAX_STAR_SIZE = 3.0f; // 실제 최대 크기 설정
+
 	enum ComponentID
 	{
 		TRANSFORM_COMPONENT,

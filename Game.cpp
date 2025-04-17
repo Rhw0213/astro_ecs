@@ -43,13 +43,14 @@ namespace astro
 		while (!WindowShouldClose())
 		{
 			inputSystem.Process();
+
+			player->Update();
+			starManager->Update();
+
 			moveSystem.Process();
 			starEffectSystem.Process();
 			cameraSystem.Process();
 			renderSystem.Process();
-
-			player->Update();
-			starManager->Update();
 		}
 	}
 }

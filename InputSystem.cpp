@@ -31,6 +31,7 @@ namespace astro
 				{
 					MyVector2 move = { 0, 0 };
 					float speed = 0.f;
+					bool isSpacePressed = false;
 
 					if (IsKeyDown(KEY_W))
 					{
@@ -40,22 +41,23 @@ namespace astro
 						if (IsKeyDown(KEY_SPACE))
 						{
 							speed = 1500.f;
+							isSpacePressed = true;
 						}
 					}
 
-					if (IsKeyDown(KEY_A))
+					if (IsKeyDown(KEY_A) && !isSpacePressed)
 					{
 						speed = 300.f;
 						move += { direction.y(), -direction.x() };
 					}
 
-					if (IsKeyDown(KEY_D))
+					if (IsKeyDown(KEY_D) && !isSpacePressed)
 					{
 						speed = 300.f;
 						move += { -direction.y(), direction.x() };
 					}
 
-					if (IsKeyDown(KEY_S))
+					if (IsKeyDown(KEY_S) && !isSpacePressed)
 					{
 						speed = 300.f;
 						move += { -direction.x(), -direction.y() };

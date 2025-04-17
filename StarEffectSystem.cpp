@@ -6,10 +6,20 @@ namespace astro
 {
     void StarEffectSystem::Process()
     {
+        if (IsKeyDown(KEY_SPACE) && IsKeyDown(KEY_W))
+        {
+            isWarp = true;
+        }
+        else
+        {
+            isWarp = false;
+        }
+
         for (const auto& object : objects)
         {
             if (object)
             {
+
                 auto* effectComponent = object.get()->GetComponent<EffectComponent>(ComponentID::EFFECT_COMPONENT);
                 auto* transformComponent = object.get()->GetComponent<TransformComponent>(ComponentID::TRANSFORM_COMPONENT);
 
@@ -17,18 +27,18 @@ namespace astro
                 float& twinkle = effectComponent->twinkle;
                 float& time = effectComponent->time;
                 float& size = transformComponent->size;
+                float maxSize = effectComponent->maxSize;
 
                 // 반짝이는 효과(함수 전환 예정)
                 time += GetFrameTime() * twinkle;
-                size = 1.f + 0.8f * sinf(time);
-                //bright = 100 + 155 * (sinf(time) + 1) / 2;
+                size = maxSize * ((sinf(time) * 0.5f) + 0.5f);
                 bright = 127 + 127 * sinf(time);
 
                 // 스페이스 눌렀을때 워프효과(함수 전환 예정)
                 auto* renderComponent = object.get()->GetComponent<RenderComponent>(ComponentID::RENDER_COMPONENT);
                 auto& points = renderComponent->points;
 
-                if (IsKeyDown(KEY_SPACE))
+                if (isWarp && points.size() == 1)
                 {
                     MyVector2 effectDirection = 
                         PlayerState::Instance()
@@ -54,7 +64,7 @@ namespace astro
 
                     points[2] += (pointOneDirection * 2.f);
 
-                    if (distance < 0.1f)
+                    if (distance < 3.f)
                     {
                         const MyVector2& point = points[0];
                         points.clear();

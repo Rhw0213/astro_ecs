@@ -11,7 +11,7 @@ namespace astro
 	public:
 		StarEffectSystem() = default;
 		void Process() override;
-
-	public:
+	private:
+		bool isWarp = false;
 	};
 }

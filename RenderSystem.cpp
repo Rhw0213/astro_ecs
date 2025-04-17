@@ -1,4 +1,5 @@
 #include "RenderSystem.h"
+#include "CameraState.h"
 
 namespace astro
 {
@@ -66,8 +67,12 @@ namespace astro
 					{
 						if (i == CIRCLE)
 						{
-							DrawCircle(static_cast<int>(points[i].x()),
-								static_cast<int>(points[i].y()), transform->size, { 255,255,255,(unsigned char)bright });
+							MyVector2 renderPosition = points[CIRCLE];
+
+							DrawCircle(static_cast<int>(renderPosition.x()),
+										static_cast<int>(renderPosition.y()), 
+										transform->size, 
+										{ 255,255,255,(unsigned char)bright });
 						}
 						else if (i == LINE)
 						{
