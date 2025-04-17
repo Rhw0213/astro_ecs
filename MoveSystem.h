@@ -7,6 +7,7 @@ namespace astro
 	class MoveSystem : public System
 	{
 	public:
+		void Init() override;
 		void Process() override;
 	private:
 	};

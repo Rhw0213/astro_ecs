@@ -2,9 +2,9 @@
 
 namespace astro
 {
-	class IService
+	class IState
 	{
 	public:
-		virtual ~IService() = default;
+		virtual ~IState() = default;
 	};
 }

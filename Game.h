@@ -1,12 +1,8 @@
 #pragma once
 #include "Player.h"
 #include "Star.h"
-#include "RenderSystem.h"
-#include "MoveSystem.h"
-#include "InputSystem.h"
-#include "StarEffectSystem.h"
-#include "CameraSystem.h"
 #include "ObjectManager.h"
+#include "SystemManager.h"
 #include <memory> 
 
 namespace astro
@@ -22,11 +18,6 @@ namespace astro
 	private:
 		std::shared_ptr<Player> player;
 		std::unique_ptr<ObjectManager> starManager;
-
-		RenderSystem renderSystem;
-		MoveSystem moveSystem;
-		InputSystem inputSystem;
-		StarEffectSystem starEffectSystem;
-		CameraSystem cameraSystem;
+		std::unique_ptr<SystemManager> systemManager;
 	};
 }

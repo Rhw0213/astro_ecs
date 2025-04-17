@@ -1,12 +1,12 @@
 #pragma once
-#include "IService.h"
+#include "IState.h"
 #include "Common.h"
 #include "Player.h"
 #include <memory> 
 
 namespace astro
 {
-    class PlayerState : public IService
+    class PlayerState : public IState
     {
     public:
         static PlayerState& Instance()

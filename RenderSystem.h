@@ -7,6 +7,7 @@ namespace astro
 	class RenderSystem : public System
 	{
 	public:
+		void Init() override;
 		void Process() override;
 	};
 }

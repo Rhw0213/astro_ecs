@@ -3,6 +3,10 @@
 
 namespace astro
 {
+	void RenderSystem::Init()
+	{
+	}
+
 	void RenderSystem::Process()
 	{
 		BeginDrawing();
@@ -29,36 +33,15 @@ namespace astro
 
 				size_t size = points.size();
 
-				if (object->GetID() != ObjectID::STAR_ID)
-				{
-					for (size_t i = 0; i < size; i++)
-					{
-						MyVector2& startPoint = points[i];
-						MyVector2& endPoint = points[(i + 1) % size];
-
-						DrawLine(static_cast<int>(startPoint.x()),
-							static_cast<int>(startPoint.y()),
-							static_cast<int>(endPoint.x()),
-							static_cast<int>(endPoint.y()), WHITE);
-
-					}
-
-					MyVector2 endPoint = position + direction * 100;
-
-					DrawLine(static_cast<int>(position.x()),
-						static_cast<int>(position.y()),
-						static_cast<int>(endPoint.x()),
-						static_cast<int>(endPoint.y()), YELLOW);
-				}
-				else
+				if (object->GetID() == ObjectID::STAR_ID)
 				{
 					auto* effectComponent = object.get()->GetComponent<EffectComponent>(ComponentID::EFFECT_COMPONENT);
 					size_t bright = effectComponent->bright;
 
 					enum DrawIndex
 					{
-						CIRCLE = 0,
-						LINE,
+						CIRCLE,
+						LINE
 					};
 
 					size_t pointsSize = points.size() == 1 ? 1 : points.size() - 1;
@@ -82,6 +65,27 @@ namespace astro
 								static_cast<int>(points[i + 1].y()), WHITE);
 						}
 					}
+
+				}
+				else
+				{
+					for (size_t i = 0; i < size; i++)
+					{
+						MyVector2& startPoint = points[i];
+						MyVector2& endPoint = points[(i + 1) % size];
+
+						DrawLine(static_cast<int>(startPoint.x()),
+							static_cast<int>(startPoint.y()),
+							static_cast<int>(endPoint.x()),
+							static_cast<int>(endPoint.y()), WHITE);
+					}
+
+					MyVector2 endPoint = position + direction * 100;
+
+					DrawLine(static_cast<int>(position.x()),
+						static_cast<int>(position.y()),
+						static_cast<int>(endPoint.x()),
+						static_cast<int>(endPoint.y()), YELLOW);
 				}
 			}
 		}

@@ -24,9 +24,6 @@
     <Filter Include="소스 파일\System">
       <UniqueIdentifier>{ae12ad41-f167-4773-a5dd-5abd35793503}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Input">
-      <UniqueIdentifier>{6a78e6c8-3099-4997-b05d-a71eb35aa70f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Game">
       <UniqueIdentifier>{a5431b44-01de-4e70-b389-26677a89b85a}</UniqueIdentifier>
     </Filter>
@@ -41,6 +38,12 @@
     </Filter>
     <Filter Include="소스 파일\State">
       <UniqueIdentifier>{293c2880-cdb4-4a4f-9ea3-a7fcc8e428fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Object\Planet">
+      <UniqueIdentifier>{3d625f7e-0ae5-4ff4-a99a-5f23059f753f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Event">
+      <UniqueIdentifier>{aaf3747f-2b16-454c-bf32-57df50dc5c56}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -61,9 +64,6 @@
     </ClInclude>
     <ClInclude Include="RenderSystem.h">
       <Filter>소스 파일\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>소스 파일\Input</Filter>
     </ClInclude>
     <ClInclude Include="System.h">
       <Filter>소스 파일\System</Filter>
@@ -95,7 +95,7 @@
     <ClInclude Include="CameraSystem.h">
       <Filter>소스 파일\System</Filter>
     </ClInclude>
-    <ClInclude Include="IService.h">
+    <ClInclude Include="IState.h">
       <Filter>소스 파일\State</Filter>
     </ClInclude>
     <ClInclude Include="CameraState.h">
@@ -103,6 +103,21 @@
     </ClInclude>
     <ClInclude Include="PlayerState.h">
       <Filter>소스 파일\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet.h">
+      <Filter>소스 파일\Object\Planet</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemManager.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="WarpSystem.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>소스 파일\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>소스 파일\Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +153,15 @@
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet.cpp">
+      <Filter>소스 파일\Object\Planet</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemManager.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
+    <ClCompile Include="WarpSystem.cpp">
+      <Filter>소스 파일\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -31,12 +31,9 @@ namespace astro
 			transformComponent->size = Random::randSize(Random::gen);
 			transformComponent->position = MyVector2{ randPosX(Random::gen), randPosY(Random::gen) };
 
-			//effectComponent->distanceDepth = 1.f - (transformComponent->size / 3.f);
 			float sizeRatio = (transformComponent->size - MIN_STAR_SIZE) / (MAX_STAR_SIZE - MIN_STAR_SIZE);
 			effectComponent->distanceDepth = 1.0f - sizeRatio;
 			effectComponent->maxSize = transformComponent->size;
-
-			//// depth 값을 0.1 ~ 1.0 사이로 제한 (너무 가까운 별 방지)
 			effectComponent->distanceDepth = std::clamp(effectComponent->distanceDepth, 0.1f, 1.0f);
 
 			renderComponent->points.push_back(transformComponent->position);
@@ -46,28 +43,51 @@ namespace astro
 	void Star::Update()
 	{
 		auto* transformComponent = Object::GetComponent<TransformComponent>(ComponentID::TRANSFORM_COMPONENT);
-		auto* renderComponent = Object::GetComponent<RenderComponent>(ComponentID::RENDER_COMPONENT);
+		MyVector2& position = transformComponent->position;
+
+		Move();
+
+		Bound bound = CalculaterBoundLine();
+		IsLineOut isLineOut = CheckCameraRangeOut(bound, position);
+		
+		SetRandomPosition(bound, isLineOut, position);
+	}
+
+	void Star::Move()
+	{
 		auto* moveComponent = Object::GetComponent<MoveComponent>(ComponentID::MOVE_COMPONENT);
 		auto* effectComponent = Object::GetComponent<EffectComponent>(ComponentID::EFFECT_COMPONENT);
+		
+		if (moveComponent && effectComponent)
+		{
+			std::shared_ptr<Player> player = PlayerState::Instance().GetPlayer();
 
-		if (!transformComponent || !renderComponent) return;
+			const MyVector2& playerMoveDirection = player.get()->GetComponent<MoveComponent>(ComponentID::MOVE_COMPONENT)->direction;
+			const float& playerSpeed = player.get()->GetComponent<MoveComponent>(ComponentID::MOVE_COMPONENT)->speed;
 
+			const float& depth = effectComponent->distanceDepth;
+
+			moveComponent->direction = playerMoveDirection;
+			moveComponent->speed = playerSpeed * depth;
+		}
+	}
+
+	Star::IsLineOut Star::CheckCameraRangeOut(Bound bound, const MyVector2& position)
+	{
+		float margin = 30.f;
+
+		return IsLineOut{ position.x() <= bound.left - margin,
+					position.x() >= bound.right + margin,
+					position.y() <= bound.top - margin,
+					position.y() >= bound.bottom + margin 
+		};
+	}
+
+	Star::Bound Star::CalculaterBoundLine()
+	{
 		const Camera2D& camera = CameraState::Instance().GetCamera();
 		const float& zoom = camera.zoom;
 		const MyVector2& cameraTarget = camera.target;
-
-		MyVector2& position = transformComponent->position;
-
-		//별 이동
-		std::shared_ptr<Player> player = PlayerState::Instance().GetPlayer();
-
-		const MyVector2& playerMoveDirection = player.get()->GetComponent<MoveComponent>(ComponentID::MOVE_COMPONENT)->direction;
-		const float& playerSpeed = player.get()->GetComponent<MoveComponent>(ComponentID::MOVE_COMPONENT)->speed;
-
-		const float& depth = effectComponent->distanceDepth;
-
-		moveComponent->direction = playerMoveDirection;
-		moveComponent->speed = playerSpeed * depth;
 
 		// 화면 밖으로 나간 별 체크
 		float viewHalfWidth = (SCREEN_WIDTH / zoom) / 2.f;
@@ -78,32 +98,34 @@ namespace astro
 		float topBound = cameraTarget.y() - viewHalfHeight;
 		float bottomBound = cameraTarget.y() + viewHalfHeight;
 
-		bool isLeftOut = position.x() <= leftBound - 30.f;
-		bool isRightOut = position.x() >= rightBound + 30.f;
-		bool isTopOut = position.y() <= topBound - 30.f;
-		bool isBottomOut = position.y() >= bottomBound + 30.f;
+		return Bound{ leftBound, rightBound, topBound, bottomBound };
+	}
+
+	void Star::SetRandomPosition(Bound bound, IsLineOut isLineOut, MyVector2& position)
+	{
+		auto* renderComponent = Object::GetComponent<RenderComponent>(ComponentID::RENDER_COMPONENT);
 
 		float margin = 100.f;
 		Rectangle spotRange{ 0,0,0,0 };
 
-		if (isLeftOut) 
-		{ 
-			spotRange = {rightBound, topBound, margin, viewHalfHeight * 2.f}; 
-		}
-		else if (isRightOut) 
-		{ 
-			spotRange = {leftBound - margin, topBound, margin, viewHalfHeight * 2.f }; 
-		}
-		else if (isTopOut) 
-		{ 
-			spotRange = { leftBound, bottomBound, viewHalfWidth * 2.f, margin };
-		}
-		else if (isBottomOut)
+		if (isLineOut.left)
 		{
-			spotRange = { leftBound, topBound - margin, viewHalfWidth * 2.f, margin };
+			spotRange = { bound.right, bound.top, margin, SCREEN_HEIGHT};
+		}
+		else if (isLineOut.right)
+		{
+			spotRange = { bound.left - margin, bound.top, margin, SCREEN_HEIGHT};
+		}
+		else if (isLineOut.top)
+		{
+			spotRange = { bound.left, bound.bottom, SCREEN_WIDTH, margin};
+		}
+		else if (isLineOut.bottom)
+		{
+			spotRange = { bound.left, bound.top - margin, SCREEN_WIDTH, margin};
 		}
 
-		if (isLeftOut || isRightOut || isTopOut || isBottomOut)
+		if (isLineOut.left || isLineOut.right || isLineOut.top || isLineOut.bottom)
 		{
 			std::uniform_real_distribution<float> randPosX(spotRange.x, spotRange.x + spotRange.width);
 			std::uniform_real_distribution<float> randPosY(spotRange.y, spotRange.y + spotRange.height);

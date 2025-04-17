@@ -23,7 +23,7 @@ namespace astro
 		if (transform && render)
 		{
 			transform->direction = { 0, -1 };
-			transform->size = 50;
+			transform->size = 25;
 			render->points.reserve(3);
 
 			camera.offset = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };

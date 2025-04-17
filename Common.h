@@ -27,6 +27,7 @@ namespace astro
 		GAMEOBJECT_ID,
 		PLAYER_ID,
 		STAR_ID,
+		PLANET_ID,
 	};
 
 	struct MyVector2 

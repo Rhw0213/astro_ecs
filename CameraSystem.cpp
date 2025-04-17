@@ -3,7 +3,10 @@
 #include "Component.h"
 
 namespace astro
-{ 
+{
+	void CameraSystem::Init()
+	{
+	}
 	void CameraSystem::Process()
 	{
 		for (const auto& object : objects)

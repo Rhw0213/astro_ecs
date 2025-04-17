@@ -11,6 +11,7 @@ namespace astro
 		System() = default;
 		~System() = default;
 
+		virtual void Init() = 0;
 		virtual void Process() = 0;
 
 		void RegisterObject(std::shared_ptr<Object> object)

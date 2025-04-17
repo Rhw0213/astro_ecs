@@ -5,7 +5,7 @@
 
 namespace astro
 {
-	class Component 
+	struct Component 
 	{ 
 	public:
 		virtual ComponentID GetID() = 0;

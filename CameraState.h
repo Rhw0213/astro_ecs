@@ -1,10 +1,10 @@
 #pragma once
-#include "IService.h"
+#include "IState.h"
 #include "Common.h"
 
 namespace astro
 {
-    class CameraState : public IService
+    class CameraState : public IState
     {
     public:
         static CameraState& Instance()

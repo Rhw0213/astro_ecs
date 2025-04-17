@@ -18,39 +18,49 @@ namespace astro
 		InitWindow(astro::SCREEN_WIDTH, astro::SCREEN_HEIGHT, "Game");
 		SetTargetFPS(60);
 
+		//Manager
+		starManager = std::make_unique<ObjectManager>();
+		systemManager = std::make_unique<SystemManager>();
+
 		// PLAYER
 		player = std::make_shared<Player>(MyVector2{ SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f });
 		player.get()->Init();
-		renderSystem.RegisterObject(player);
-		moveSystem.RegisterObject(player);
-		inputSystem.RegisterObject(player);
-		cameraSystem.RegisterObject(player);
+
+		systemManager.get()->RegisterObjectOfSystem(
+			{	
+				SystemManager::RENDER_SYSTEM,
+				SystemManager::MOVE_SYSTEM,
+				SystemManager::INPUT_SYSTEM,
+				SystemManager::CAMERA_SYSTEM,
+			}, player);
 
 		// STAR
-		starManager = std::make_unique<ObjectManager>();
-		for (int i = 0; i < 200; i++)
+		for (size_t i = 0; i < 200; i++)
 		{
 			std::shared_ptr<Star> star = starManager->CreateObject<Star>();
-			starEffectSystem.RegisterObject(star);
-			moveSystem.RegisterObject(star);
-			renderSystem.RegisterObject(star);
+
+			systemManager.get()->RegisterObjectOfSystem(
+				{	
+					SystemManager::RENDER_SYSTEM,
+					SystemManager::MOVE_SYSTEM,
+					SystemManager::STAR_EFFECT_SYSTEM,
+					SystemManager::WARP_SYSTEM,
+				}, star);
 		}
 		starManager->Init();
+
+		//Planet
+
+		systemManager->Init();
 	}
 
 	void Game::Run()
 	{
 		while (!WindowShouldClose())
 		{
-			inputSystem.Process();
-
+			systemManager->RunProcess();
 			player->Update();
 			starManager->Update();
-
-			moveSystem.Process();
-			starEffectSystem.Process();
-			cameraSystem.Process();
-			renderSystem.Process();
 		}
 	}
 }

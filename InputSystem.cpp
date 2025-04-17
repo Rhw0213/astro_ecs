@@ -1,8 +1,13 @@
 #include "InputSystem.h"
 #include "raylib.h"
+#include "EventManager.h"
+#include "Event.h"
 
 namespace astro
 {
+	void InputSystem::Init()
+	{
+	}
 	void InputSystem::Process()
 	{
 		for (const auto& object: objects)
@@ -42,6 +47,7 @@ namespace astro
 						{
 							speed = 1500.f;
 							isSpacePressed = true;
+							EventManager::Instance().RunEvent<WarpStartEvent>(WarpStartEvent());
 						}
 					}
 
