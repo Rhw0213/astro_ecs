@@ -15,9 +15,9 @@ namespace astro
 		RegisterSystem<CameraSystem>(std::make_shared<CameraSystem>());
 		RegisterSystem<MoveSystem>(std::make_shared<MoveSystem>());
 		RegisterSystem<StarEffectSystem>(std::make_shared<StarEffectSystem>());
-		RegisterSystem<RenderSystem>(std::make_shared<RenderSystem>());
 		RegisterSystem<WarpSystem>(std::make_shared<WarpSystem>());
 		RegisterSystem<RotationSystem>(std::make_shared<RotationSystem>());
+		RegisterSystem<RenderSystem>(std::make_shared<RenderSystem>());
 	}
 
 	void SystemManager::Init()

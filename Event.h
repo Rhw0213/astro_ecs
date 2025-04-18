@@ -11,4 +11,16 @@ namespace astro
 	{
 		WarpStartEvent() {};
 	};
+
+	struct WarpStopEvent : Event
+	{
+		WarpStopEvent() {};
+	};
+
+	struct CameraZoomEvent : Event
+	{
+		CameraZoomEvent(float zoom) : zoom(zoom) {};
+
+		float zoom = 0.f;
+	};
 }

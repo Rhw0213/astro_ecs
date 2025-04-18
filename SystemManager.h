@@ -18,9 +18,9 @@ namespace astro
 			CAMERA_SYSTEM,
 			MOVE_SYSTEM,
 			STAR_EFFECT_SYSTEM,
-			RENDER_SYSTEM,
 			WARP_SYSTEM,
-			ROTATION_SYSTEM
+			ROTATION_SYSTEM,
+			RENDER_SYSTEM
 		};
 
 		template <typename T>

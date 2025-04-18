@@ -14,35 +14,35 @@ namespace astro
 			auto* moveComponent = object.get()->GetComponent<MoveComponent>(ComponentID::MOVE_COMPONENT);
 			auto* renderComponent = object.get()->GetComponent<RenderComponent>(ComponentID::RENDER_COMPONENT);
 
-			if (object)
+			if (object && transformComponent && moveComponent && renderComponent)
 			{
-				if (transformComponent && moveComponent)
+				auto& points = renderComponent->points;
+
+				MyVector2& position = transformComponent->position;
+				const MyVector2& moveDirection = moveComponent->direction.Normalize();
+				const float& speed = moveComponent->speed;
+				MyVector2& slowVelocity = moveComponent->slowVelocity;
+
+				//속도 계산
+				MyVector2 velocity = moveDirection * speed * GetFrameTime();
+				float velocityLength = velocity.Length();
+
+				if (velocityLength > slowVelocity.Length())
 				{
-					auto& points = renderComponent->points;
-
-					MyVector2& position = transformComponent->position;
-					const MyVector2& direction = transformComponent->direction;
-					const MyVector2& moveDirection = moveComponent->direction.Normalize();
-					const float& speed = moveComponent->speed;
-					MyVector2& slowVelocity = moveComponent->slowVelocity;
-					
-					if (speed <= 0.1f)
-					{
-						slowVelocity *= 0.95f;
-					}
-					else
-					{
-						slowVelocity = moveDirection * speed * GetFrameTime();
-					}
-
-					position += slowVelocity;
-
-					for (auto& point : points)
-					{
-						//랜더위치 이동
-						point += slowVelocity;
-					}
+					slowVelocity += (velocity * 0.05f);
 				}
+				else
+				{
+					slowVelocity *= 0.95f;
+				}
+
+				//랜더위치 이동
+				for (auto& point : points)
+				{
+					point += slowVelocity;
+				}
+
+				position += slowVelocity;
 			}
 		}
 	}

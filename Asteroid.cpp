@@ -27,7 +27,7 @@ namespace astro
 		rotationComponent->angle = { atan2f(direction.y(), direction.x()) };
 		rotationComponent->previousAngle = rotationComponent->angle;
 
-		moveComponent->speed = 100.f;
+		moveComponent->speed = 0.f;
 
 		SetVertex();
 	}

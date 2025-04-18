@@ -67,10 +67,11 @@ namespace astro
 	{
 		while (!WindowShouldClose())
 		{
-			systemManager->RunProcess();
 			player->Update();
 			starManager->Update();
 			asteroid->Update();
+
+			systemManager->RunProcess();
 		}
 	}
 }

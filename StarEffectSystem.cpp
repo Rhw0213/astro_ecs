@@ -26,7 +26,7 @@ namespace astro
                 // 반짝이는 효과
                 time += GetFrameTime() * twinkle;
                 size = maxSize * ((sinf(time) * 0.5f) + 0.5f);
-                bright = 127 + 127 * sinf(time);
+                bright = static_cast<int>(127 + 127 * sinf(time));
             }
         }
     }

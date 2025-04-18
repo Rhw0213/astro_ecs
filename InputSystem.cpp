@@ -45,21 +45,20 @@ namespace astro
 
 						if (IsKeyDown(KEY_SPACE))
 						{
-							speed = 1500.f;
+							speed = 2000.f;
 							isSpacePressed = true;
-							EventManager::Instance().RunEvent<WarpStartEvent>(WarpStartEvent());
 						}
 					}
 
 					if (IsKeyDown(KEY_A) && !isSpacePressed)
 					{
-						speed = 300.f;
+						speed = 500.f;
 						move += { direction.y(), -direction.x() };
 					}
 
 					if (IsKeyDown(KEY_D) && !isSpacePressed)
 					{
-						speed = 300.f;
+						speed = 500.f;
 						move += { -direction.y(), direction.x() };
 					}
 
@@ -68,7 +67,17 @@ namespace astro
 						speed = 300.f;
 						move += { -direction.x(), -direction.y() };
 					}
+
+					if (IsKeyReleased(KEY_SPACE))
+					{
+						EventManager::Instance().RunEvent<WarpStopEvent>(WarpStopEvent());
+					}
 					
+					if (IsKeyPressed(KEY_SPACE))
+					{
+						EventManager::Instance().RunEvent<WarpStartEvent>(WarpStartEvent());
+					}
+
 					moveDirection = move;
 					moveSpeed = speed;
 				}

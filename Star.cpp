@@ -13,6 +13,7 @@ namespace astro
 		Object::AddComponent(std::make_shared<MoveComponent>());
 		Object::AddComponent(std::make_shared<RenderComponent>());
 		Object::AddComponent(std::make_shared<EffectComponent>());
+		Object::AddComponent(std::make_shared<WarpComponent>());
 	}
 
 	void Star::Init()
@@ -143,7 +144,21 @@ namespace astro
 
 			position = MyVector2{ randPosX(Random::gen), randPosY(Random::gen) };
 
-			renderComponent->points[0] = position;
+			auto& points = renderComponent->points;
+			MyVector2 jumpPoint{ 0, 0 };
+
+			for (size_t i = 0; i < points.size(); i++)
+			{
+				if (i == 0)
+				{
+					jumpPoint = position - points[i];
+					points[i] = position;
+				}
+				else
+				{
+					points[i] += jumpPoint;
+				}
+			}
 		}
 	}
 }

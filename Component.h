@@ -126,4 +126,17 @@ namespace astro
 		Angle angle = { 0.f };
 		Angle previousAngle = { 0.f };
 	};
+
+	struct WarpComponent : public Component
+	{
+		WarpComponent()
+		{ }
+
+		ComponentID GetID() override 
+		{ 
+			return ComponentID::WARP_COMPONENT;
+		}
+		
+		bool isWarp = false;
+	};
 }
