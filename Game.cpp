@@ -32,6 +32,7 @@ namespace astro
 				SystemManager::MOVE_SYSTEM,
 				SystemManager::INPUT_SYSTEM,
 				SystemManager::CAMERA_SYSTEM,
+				SystemManager::ROTATION_SYSTEM,
 			}, player);
 
 		// STAR
@@ -45,11 +46,19 @@ namespace astro
 					SystemManager::MOVE_SYSTEM,
 					SystemManager::STAR_EFFECT_SYSTEM,
 					SystemManager::WARP_SYSTEM,
-				}, star);
+			}, star);
 		}
 		starManager->Init();
 
-		//Planet
+		//Asteroid
+		asteroid = std::make_shared<Asteroid>(MyVector2{ SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f });
+		systemManager.get()->RegisterObjectOfSystem(
+			{	
+					SystemManager::RENDER_SYSTEM,
+					SystemManager::MOVE_SYSTEM,
+					SystemManager::ROTATION_SYSTEM
+		}, asteroid);
+		asteroid->Init();
 
 		systemManager->Init();
 	}
@@ -61,6 +70,7 @@ namespace astro
 			systemManager->RunProcess();
 			player->Update();
 			starManager->Update();
+			asteroid->Update();
 		}
 	}
 }

@@ -26,53 +26,53 @@ namespace astro
 			if (object)
 			{
 				auto& points = object.get()->GetComponent<RenderComponent>(ComponentID::RENDER_COMPONENT)->points;
-				auto* transform = object.get()->GetComponent<TransformComponent>(ComponentID::TRANSFORM_COMPONENT);
+				auto* transformComponent = object.get()->GetComponent<TransformComponent>(ComponentID::TRANSFORM_COMPONENT);
 
-				MyVector2& direction = transform->direction;
-				MyVector2& position = transform->position;
+				const MyVector2& direction = transformComponent->direction;
+				const MyVector2& position = transformComponent->position;
+				const float& size = transformComponent->size;
 
-				size_t size = points.size();
+				size_t pointsSize = points.size();
 
 				if (object->GetID() == ObjectID::STAR_ID)
 				{
 					auto* effectComponent = object.get()->GetComponent<EffectComponent>(ComponentID::EFFECT_COMPONENT);
 					size_t bright = effectComponent->bright;
-
+					Color starColor = effectComponent->color;
 					enum DrawIndex
 					{
 						CIRCLE,
 						LINE
 					};
 
-					size_t pointsSize = points.size() == 1 ? 1 : points.size() - 1;
+					pointsSize = pointsSize == 1 ? 1 : pointsSize - 1;
 
 					for (size_t i = 0; i < pointsSize; i++)
 					{
 						if (i == CIRCLE)
 						{
 							MyVector2 renderPosition = points[CIRCLE];
-
 							DrawCircle(static_cast<int>(renderPosition.x()),
 										static_cast<int>(renderPosition.y()), 
-										transform->size, 
-										{ 255,255,255,(unsigned char)bright });
+										size, 
+										{ starColor.r, starColor.g, starColor.b, (unsigned char)bright });
 						}
 						else if (i == LINE)
 						{
 							DrawLine(static_cast<int>(points[i].x()),
 								static_cast<int>(points[i].y()),
 								static_cast<int>(points[i + 1].x()),
-								static_cast<int>(points[i + 1].y()), WHITE);
+								static_cast<int>(points[i + 1].y()), starColor);
 						}
 					}
 
 				}
-				else
+				else if (object.get()->GetID() == ObjectID::PLAYER_ID)
 				{
-					for (size_t i = 0; i < size; i++)
+					for (size_t i = 0; i < pointsSize; i++)
 					{
 						MyVector2& startPoint = points[i];
-						MyVector2& endPoint = points[(i + 1) % size];
+						MyVector2& endPoint = points[(i + 1) % pointsSize];
 
 						DrawLine(static_cast<int>(startPoint.x()),
 							static_cast<int>(startPoint.y()),
@@ -86,6 +86,22 @@ namespace astro
 						static_cast<int>(position.y()),
 						static_cast<int>(endPoint.x()),
 						static_cast<int>(endPoint.y()), YELLOW);
+				}
+				else if (object.get()->GetID() == ObjectID::ASTEROID_ID)
+				{
+					if (pointsSize > 3)
+					{
+						for (size_t i = 0; i < pointsSize - 1; i++) {
+							DrawLineEx(points[i], points[i + 1], 1.0f, WHITE);
+						}
+						DrawLineEx(points.back(), points[0], 1.0f, WHITE);
+					}
+					MyVector2 endPoint = position + direction * 50;
+
+					DrawLine(static_cast<int>(position.x()),
+						static_cast<int>(position.y()),
+						static_cast<int>(endPoint.x()),
+						static_cast<int>(endPoint.y()), RED);
 				}
 			}
 		}

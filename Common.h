@@ -19,7 +19,8 @@ namespace astro
 		MOVE_COMPONENT,
 		INPUT_COMPONENT,
 		EFFECT_COMPONENT,
-		CAMERA_COMPONENT
+		CAMERA_COMPONENT,
+		ROTATION_COMPONENT
 	};
 
 	enum ObjectID
@@ -27,7 +28,7 @@ namespace astro
 		GAMEOBJECT_ID,
 		PLAYER_ID,
 		STAR_ID,
-		PLANET_ID,
+		ASTEROID_ID,
 	};
 
 	struct MyVector2 
@@ -97,6 +98,21 @@ namespace astro
 		float& y() { return vec.y; }
 		const float& x() const { return vec.x; }
 		const float& y() const { return vec.y; }
+	};
+
+	struct Angle
+	{
+		static float DregreeToRadian(float degree)
+		{
+			return degree * (PI / 180.f);
+		}
+
+		static float RadianToDegree(float radian)
+		{
+			return radian * (180.f / PI);
+		}
+
+		float radian = 0.f;
 	};
 }
 

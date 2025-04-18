@@ -78,6 +78,7 @@ namespace astro
 			, time(0.f)
 			, distanceDepth(0.f)
 			, maxSize(0.f)
+			, color(WHITE)
 		{ }
 
 		ComponentID GetID() override 
@@ -90,6 +91,7 @@ namespace astro
 		float time = 0.f;
 		float distanceDepth = 0.f;
 		float maxSize = 0.f;
+		Color color = WHITE;
 	};
 
 	struct CameraComponent : public Component
@@ -107,5 +109,21 @@ namespace astro
 		}
 
 		Camera2D camera;
+	};
+
+	struct RotationComponent : public Component
+	{
+		RotationComponent(float angle = 0.f, float previousAngle = 0.f)
+			: angle{ angle }
+			, previousAngle{ previousAngle }
+		{ }
+
+		ComponentID GetID() override 
+		{ 
+			return ComponentID::ROTATION_COMPONENT;
+		}
+
+		Angle angle = { 0.f };
+		Angle previousAngle = { 0.f };
 	};
 }

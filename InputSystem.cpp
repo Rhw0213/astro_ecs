@@ -8,6 +8,7 @@ namespace astro
 	void InputSystem::Init()
 	{
 	}
+
 	void InputSystem::Process()
 	{
 		for (const auto& object: objects)
@@ -24,7 +25,6 @@ namespace astro
 				float& moveSpeed = moveComponent->speed;
 
 				const Camera2D& camera = cameraComponent->camera;
-			
 				const MyVector2& mousePosition = GetScreenToWorld2D(GetMousePosition(), camera);
 
 				if (!IsKeyDown(KEY_SPACE))

@@ -11,7 +11,6 @@ namespace astro
 		ObjectID GetID() const override { return ObjectID::PLAYER_ID; };
 		void Init() override;
 		void Update() override;
-		void CalculationTransform();
 	private:
 	};
 }

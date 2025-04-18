@@ -28,6 +28,17 @@ namespace astro
 
 			effectComponent->bright = Random::randBright(Random::gen);
 			effectComponent->twinkle = Random::randTwinkle(Random::gen);
+
+			Color starColors[] = {
+				{150, 180, 255, 255}, // 파란 별 (뜨거움)
+				{200, 220, 255, 255}, // 연한 파랑
+				{255, 245, 235, 255}, // 흰색 (태양 비슷)
+				{255, 255, 200, 255}, // 연한 노랑
+				{255, 200, 150, 255}, // 주황색
+				{255, 150, 100, 255}  // 붉은 별 (차가움)
+			};
+			effectComponent->color = starColors[Random::randColor(Random::gen)];
+
 			transformComponent->size = Random::randSize(Random::gen);
 			transformComponent->position = MyVector2{ randPosX(Random::gen), randPosY(Random::gen) };
 
@@ -131,8 +142,8 @@ namespace astro
 			std::uniform_real_distribution<float> randPosY(spotRange.y, spotRange.y + spotRange.height);
 
 			position = MyVector2{ randPosX(Random::gen), randPosY(Random::gen) };
-		}
 
-		renderComponent->points[0] = position;
+			renderComponent->points[0] = position;
+		}
 	}
 }

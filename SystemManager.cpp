@@ -3,6 +3,7 @@
 #include "InputSystem.h"
 #include "MoveSystem.h"
 #include "RenderSystem.h"
+#include "RotationSystem.h"
 #include "StarEffectSystem.h"
 #include "WarpSystem.h"
 
@@ -16,6 +17,7 @@ namespace astro
 		RegisterSystem<StarEffectSystem>(std::make_shared<StarEffectSystem>());
 		RegisterSystem<RenderSystem>(std::make_shared<RenderSystem>());
 		RegisterSystem<WarpSystem>(std::make_shared<WarpSystem>());
+		RegisterSystem<RotationSystem>(std::make_shared<RotationSystem>());
 	}
 
 	void SystemManager::Init()

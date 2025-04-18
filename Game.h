@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "Star.h"
+#include "Asteroid.h"
 #include "ObjectManager.h"
 #include "SystemManager.h"
 #include <memory> 
@@ -17,6 +18,7 @@ namespace astro
 
 	private:
 		std::shared_ptr<Player> player;
+		std::shared_ptr<Asteroid> asteroid;
 		std::unique_ptr<ObjectManager> starManager;
 		std::unique_ptr<SystemManager> systemManager;
 	};
