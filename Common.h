@@ -77,6 +77,13 @@ namespace astro
 			return *this;
 		}
 
+		MyVector2 operator/=(float scalar){
+			if (scalar == 0) return { 0, 0 };
+			vec.x /= scalar;
+			vec.y /= scalar;
+			return *this;
+		}
+
 		MyVector2 DirectionTo(const MyVector2& target) const {
 			return (target - *this).Normalize(); // 이름 변경 및 정규화
 		}

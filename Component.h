@@ -101,6 +101,8 @@ namespace astro
 						float rotation = 0.f,
 						float zoom = 1.f)
 			: camera{ offset, target, rotation, zoom }
+			, targetZoom(0.f)
+			, zoomSpeed(0.f)
 		{ }
 
 		ComponentID GetID() override 
@@ -109,6 +111,8 @@ namespace astro
 		}
 
 		Camera2D camera;
+		float targetZoom = 0.f;
+		float zoomSpeed = 0.f;
 	};
 
 	struct RotationComponent : public Component

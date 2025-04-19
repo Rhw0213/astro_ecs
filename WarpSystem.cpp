@@ -60,7 +60,7 @@ namespace astro
             {
                 if (isWarp)
                 {
-                    EventManager::Instance().RunEvent(CameraZoomEvent(1.5f));
+                    EventManager::Instance().RunEvent(CameraZoomEvent(0.7f, 0.02f));
 
                     float distance = points[1].Distance(points[2]);
                     MyVector2 pointTwoDirection = points[1].DirectionTo(points[2]);
@@ -81,6 +81,7 @@ namespace astro
                         const MyVector2& point = points[0];
                         points.clear();
                         points.push_back(point);
+						EventManager::Instance().RunEvent(CameraZoomEvent(1.f, 0.02f));
                     }
                 }
             }

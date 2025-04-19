@@ -20,6 +20,7 @@ namespace astro
 
 		//Manager
 		starManager = std::make_unique<ObjectManager>();
+		asteroidManager = std::make_unique<ObjectManager>();
 		systemManager = std::make_unique<SystemManager>();
 
 		// PLAYER
@@ -50,15 +51,18 @@ namespace astro
 		}
 		starManager->Init();
 
-		//Asteroid
-		asteroid = std::make_shared<Asteroid>(MyVector2{ SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f });
-		systemManager.get()->RegisterObjectOfSystem(
-			{	
-					SystemManager::RENDER_SYSTEM,
-					SystemManager::MOVE_SYSTEM,
-					SystemManager::ROTATION_SYSTEM
-		}, asteroid);
-		asteroid->Init();
+		for (size_t i = 0; i < 10; i++)
+		{
+			std::shared_ptr<Asteroid> asteroid = asteroidManager->CreateObject<Asteroid>();
+
+			systemManager.get()->RegisterObjectOfSystem(
+				{
+						SystemManager::RENDER_SYSTEM,
+						SystemManager::MOVE_SYSTEM,
+						SystemManager::ROTATION_SYSTEM
+				}, asteroid);
+		}
+		asteroidManager->Init();
 
 		systemManager->Init();
 	}
@@ -69,7 +73,7 @@ namespace astro
 		{
 			player->Update();
 			starManager->Update();
-			asteroid->Update();
+			asteroidManager->Update();
 
 			systemManager->RunProcess();
 		}

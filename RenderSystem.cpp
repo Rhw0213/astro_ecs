@@ -37,8 +37,10 @@ namespace astro
 				if (object->GetID() == ObjectID::STAR_ID)
 				{
 					auto* effectComponent = object.get()->GetComponent<EffectComponent>(ComponentID::EFFECT_COMPONENT);
-					size_t bright = effectComponent->bright;
+					int bright = effectComponent->bright;
+					float maxSize = effectComponent->maxSize;
 					Color starColor = effectComponent->color;
+					
 					enum DrawIndex
 					{
 						CIRCLE,
@@ -59,10 +61,9 @@ namespace astro
 						}
 						else if (i == LINE)
 						{
-							DrawLine(static_cast<int>(points[i].x()),
-								static_cast<int>(points[i].y()),
-								static_cast<int>(points[i + 1].x()),
-								static_cast<int>(points[i + 1].y()), starColor);
+							//¼±±¾±â
+							float lineThickness = maxSize * 2.f;
+							DrawLineEx(points[i], points[i + 1], lineThickness, starColor);
 						}
 					}
 
@@ -74,10 +75,7 @@ namespace astro
 						MyVector2& startPoint = points[i];
 						MyVector2& endPoint = points[(i + 1) % pointsSize];
 
-						DrawLine(static_cast<int>(startPoint.x()),
-							static_cast<int>(startPoint.y()),
-							static_cast<int>(endPoint.x()),
-							static_cast<int>(endPoint.y()), WHITE);
+						DrawLineEx(startPoint, endPoint, 3.f, WHITE);
 					}
 
 					MyVector2 endPoint = position + direction * 100;
@@ -96,12 +94,12 @@ namespace astro
 						}
 						DrawLineEx(points.back(), points[0], 1.0f, WHITE);
 					}
-					MyVector2 endPoint = position + direction * 50;
+					MyVector2 endPoint = position + direction * 100;
 
 					DrawLine(static_cast<int>(position.x()),
 						static_cast<int>(position.y()),
 						static_cast<int>(endPoint.x()),
-						static_cast<int>(endPoint.y()), RED);
+						static_cast<int>(endPoint.y()), YELLOW);
 				}
 			}
 		}

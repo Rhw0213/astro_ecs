@@ -86,7 +86,7 @@ namespace astro
 
 	Star::IsLineOut Star::CheckCameraRangeOut(Bound bound, const MyVector2& position)
 	{
-		float margin = 30.f;
+		float margin = 200.f;
 
 		return IsLineOut{ position.x() <= bound.left - margin,
 					position.x() >= bound.right + margin,
@@ -98,17 +98,14 @@ namespace astro
 	Star::Bound Star::CalculaterBoundLine()
 	{
 		const Camera2D& camera = CameraState::Instance().GetCamera();
-		const float& zoom = camera.zoom;
 		const MyVector2& cameraTarget = camera.target;
+		MyVector2 viewScreen = ViewScreenSize();
+		viewScreen /= 2.f;
 
-		// 화면 밖으로 나간 별 체크
-		float viewHalfWidth = (SCREEN_WIDTH / zoom) / 2.f;
-		float viewHalfHeight = (SCREEN_HEIGHT / zoom) / 2.f;
-
-		float leftBound = cameraTarget.x() - viewHalfWidth;
-		float rightBound = cameraTarget.x() + viewHalfWidth;
-		float topBound = cameraTarget.y() - viewHalfHeight;
-		float bottomBound = cameraTarget.y() + viewHalfHeight;
+		float leftBound = cameraTarget.x() - viewScreen.x();
+		float rightBound = cameraTarget.x() + viewScreen.x();
+		float topBound = cameraTarget.y() - viewScreen.y();
+		float bottomBound = cameraTarget.y() + viewScreen.y();
 
 		return Bound{ leftBound, rightBound, topBound, bottomBound };
 	}
@@ -117,24 +114,25 @@ namespace astro
 	{
 		auto* renderComponent = Object::GetComponent<RenderComponent>(ComponentID::RENDER_COMPONENT);
 
-		float margin = 100.f;
+		float margin = 200.f;
 		Rectangle spotRange{ 0,0,0,0 };
+		const MyVector2& viewScreen = ViewScreenSize();
 
 		if (isLineOut.left)
 		{
-			spotRange = { bound.right, bound.top, margin, SCREEN_HEIGHT};
+			spotRange = { bound.right, bound.top, margin, viewScreen.y()};
 		}
 		else if (isLineOut.right)
 		{
-			spotRange = { bound.left - margin, bound.top, margin, SCREEN_HEIGHT};
+			spotRange = { bound.left - margin, bound.top, margin, viewScreen.y()};
 		}
 		else if (isLineOut.top)
 		{
-			spotRange = { bound.left, bound.bottom, SCREEN_WIDTH, margin};
+			spotRange = { bound.left, bound.bottom, viewScreen.x(), margin};
 		}
 		else if (isLineOut.bottom)
 		{
-			spotRange = { bound.left, bound.top - margin, SCREEN_WIDTH, margin};
+			spotRange = { bound.left, bound.top - margin, viewScreen.x(), margin};
 		}
 
 		if (isLineOut.left || isLineOut.right || isLineOut.top || isLineOut.bottom)
@@ -160,5 +158,16 @@ namespace astro
 				}
 			}
 		}
+	}
+
+	const MyVector2& Star::ViewScreenSize()
+	{
+		const Camera2D& camera = CameraState::Instance().GetCamera();
+		const float& zoom = camera.zoom;
+
+		float viewWidth = SCREEN_WIDTH / zoom;
+		float viewHeight = SCREEN_HEIGHT / zoom;
+
+		return { viewWidth, viewHeight };
 	}
 }

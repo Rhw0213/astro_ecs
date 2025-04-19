@@ -19,8 +19,12 @@ namespace astro
 
 	struct CameraZoomEvent : Event
 	{
-		CameraZoomEvent(float zoom) : zoom(zoom) {};
+		CameraZoomEvent(float targetZoom, float zoomSpeed) 
+			: targetZoom(targetZoom) 
+			, zoomSpeed(zoomSpeed)
+		{};
 
-		float zoom = 0.f;
+		float targetZoom = 0.f;
+		float zoomSpeed = 0.f;
 	};
 }

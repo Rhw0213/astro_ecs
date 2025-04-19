@@ -17,17 +17,16 @@ namespace astro
 		auto* moveComponent = Object::GetComponent<MoveComponent>(ComponentID::MOVE_COMPONENT);
 		auto* rotationComponent = Object::GetComponent<RotationComponent>(ComponentID::ROTATION_COMPONENT);
 
-		transformComponent->size = 70.f;
-		transformComponent->position = { SCREEN_WIDTH / 2.f, SCREEN_HEIGHT };
-		transformComponent->direction = MyVector2{ Random::randZeroToOneFloat(Random::gen), 
-											Random::randZeroToOneFloat(Random::gen)}.Normalize();
+		transformComponent->size = Random::randAsteroidSize(Random::gen);
+		transformComponent->position = { Random::randScreenX(Random::gen), Random::randScreenY(Random::gen)};
+		transformComponent->direction = MyVector2{ Random::randZeroToOneFloat(Random::gen), Random::randZeroToOneFloat(Random::gen)}.Normalize();
 
 		const MyVector2& direction = transformComponent->direction;
 
 		rotationComponent->angle = { atan2f(direction.y(), direction.x()) };
 		rotationComponent->previousAngle = rotationComponent->angle;
 
-		moveComponent->speed = 0.f;
+		moveComponent->speed = Random::randAsteroidSpeed(Random::gen);
 
 		SetVertex();
 	}
@@ -39,16 +38,25 @@ namespace astro
 		auto* rotationComponent = Object::GetComponent<RotationComponent>(ComponentID::ROTATION_COMPONENT);
 
 		const MyVector2& position = transformComponent->position;
+		MyVector2& direction = transformComponent->direction;
 		MyVector2& moveDirection = moveComponent->direction;
 		Angle& angle = rotationComponent->angle;
 
 		MyVector2 randomPosition = { 
-			static_cast<float>(perlinNoise.noise(position.x(), 0)), 
+			static_cast<float>(perlinNoise.noise(position.x(), 0)),
 			static_cast<float>(perlinNoise.noise(0, position.y()))
 		};
 
-		moveDirection = position.DirectionTo(randomPosition);
+		// ?
+		if (randomPosition.x() == 0.f && randomPosition.y() == 0.f)
+		{
+			randomPosition.x() = Random::randMinusToPlusFormOneFloat(Random::gen);
+			randomPosition.y() = Random::randMinusToPlusFormOneFloat(Random::gen);
+		}
+
+		moveDirection = position.DirectionTo(randomPosition + position);
 		angle.radian += PI * GetFrameTime();
+		direction = {cosf(angle.radian), sinf(angle.radian)};
 	}
 
 	void Asteroid::SetVertex()
@@ -74,6 +82,7 @@ namespace astro
 
 			float vertexOffsetX = currentDistance * cosf(currentAngle);
 			float vertexOffsetY = currentDistance * sinf(currentAngle);
+
 			float x = position.x() + vertexOffsetX;
 			float y = position.y() + vertexOffsetY;
 

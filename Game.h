@@ -18,8 +18,10 @@ namespace astro
 
 	private:
 		std::shared_ptr<Player> player;
-		std::shared_ptr<Asteroid> asteroid;
+
 		std::unique_ptr<ObjectManager> starManager;
+		std::unique_ptr<ObjectManager> asteroidManager;
+
 		std::unique_ptr<SystemManager> systemManager;
 	};
 }
