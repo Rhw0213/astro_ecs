@@ -24,8 +24,9 @@ namespace astro
 
 		if (renderComponent && transformComponent && effectComponent)
 		{
-			std::uniform_real_distribution<float> randPosX(0.f, astro::SCREEN_WIDTH);
-			std::uniform_real_distribution<float> randPosY(0.f, astro::SCREEN_HEIGHT);
+			float margin = 300.f;
+			std::uniform_real_distribution<float> randPosX(-margin, astro::SCREEN_WIDTH + margin);
+			std::uniform_real_distribution<float> randPosY(-margin, astro::SCREEN_HEIGHT + margin);
 
 			effectComponent->bright = Random::randBright(Random::gen);
 			effectComponent->twinkle = Random::randTwinkle(Random::gen);
@@ -86,7 +87,7 @@ namespace astro
 
 	Star::IsLineOut Star::CheckCameraRangeOut(Bound bound, const MyVector2& position)
 	{
-		float margin = 200.f;
+		float margin = 300.f;
 
 		return IsLineOut{ position.x() <= bound.left - margin,
 					position.x() >= bound.right + margin,
@@ -114,7 +115,7 @@ namespace astro
 	{
 		auto* renderComponent = Object::GetComponent<RenderComponent>(ComponentID::RENDER_COMPONENT);
 
-		float margin = 200.f;
+		float margin = 300.f;
 		Rectangle spotRange{ 0,0,0,0 };
 		const MyVector2& viewScreen = ViewScreenSize();
 
@@ -168,6 +169,6 @@ namespace astro
 		float viewWidth = SCREEN_WIDTH / zoom;
 		float viewHeight = SCREEN_HEIGHT / zoom;
 
-		return { viewWidth, viewHeight };
+		return MyVector2{ viewWidth, viewHeight };
 	}
 }

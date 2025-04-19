@@ -5,6 +5,29 @@ namespace astro
 {
 	void RenderSystem::Init()
 	{
+		//UI
+		for (const auto& object : objects)
+		{
+			if (object.get()->GetID() == ObjectID::CONTROLL_UI_ID)
+			{
+				std::shared_ptr<UI> uiPtr = std::dynamic_pointer_cast<UI>(object);
+
+				if (uiPtr)
+				{
+					uiObjects.push_back(uiPtr);
+				}
+			}
+		}
+
+		// 카메라   오브젝트 찾기
+		for (const auto& object : objects)
+		{
+			if (object.get()->GetID() == ObjectID::PLAYER_ID)
+			{
+				cameraObjects.push_back(std::shared_ptr<Object>(object));
+			}
+
+		}
 	}
 
 	void RenderSystem::Process()
@@ -12,14 +35,22 @@ namespace astro
 		BeginDrawing();
 		ClearBackground(BLACK);
 
-		for (const auto& object: objects)
+		//Camera
+		for (const auto& object: cameraObjects)
 		{
-			//Camera
 			auto* cameraComponent = object.get()->GetComponent<CameraComponent>(ComponentID::CAMERA_COMPONENT);
 			if (cameraComponent)
 			{
 				Camera2D& camera = cameraComponent->camera;
 				BeginMode2D(camera);
+			}
+		}
+
+		for (const auto& object: objects)
+		{
+			if (object.get()->GetID() == ObjectID::CONTROLL_UI_ID)
+			{
+				continue;
 			}
 
 			//Object
@@ -63,7 +94,8 @@ namespace astro
 						{
 							//선굶기
 							float lineThickness = maxSize * 2.f;
-							DrawLineEx(points[i], points[i + 1], lineThickness, starColor);
+							DrawLineEx(points[i], points[i + 1], lineThickness, 
+								{ starColor.r, starColor.g, starColor.b, (unsigned char)bright });
 						}
 					}
 
@@ -104,7 +136,15 @@ namespace astro
 			}
 		}
 
+		//카메라 모드 끝 
 		EndMode2D();
+
+		// ui render
+		for (const auto& object : uiObjects)
+		{
+			object.get()->Draw();
+		}
+
 		EndDrawing();
 	}
 }

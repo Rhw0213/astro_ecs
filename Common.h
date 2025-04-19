@@ -21,7 +21,8 @@ namespace astro
 		EFFECT_COMPONENT,
 		CAMERA_COMPONENT,
 		ROTATION_COMPONENT,
-		WARP_COMPONENT
+		WARP_COMPONENT,
+		UI_COMPONENT
 	};
 
 	enum ObjectID
@@ -30,6 +31,9 @@ namespace astro
 		PLAYER_ID,
 		STAR_ID,
 		ASTEROID_ID,
+		//UI
+		UI_ID,
+		CONTROLL_UI_ID
 	};
 
 	struct MyVector2 

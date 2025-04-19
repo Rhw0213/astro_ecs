@@ -143,4 +143,18 @@ namespace astro
 		
 		bool isWarp = false;
 	};
+
+	struct UIComponent : public Component
+	{
+		UIComponent()
+		{ }
+
+		ComponentID GetID() override 
+		{ 
+			return ComponentID::UI_COMPONENT;
+		}
+		
+		std::vector<std::shared_ptr<Texture2D>> textures;
+
+	};
 }

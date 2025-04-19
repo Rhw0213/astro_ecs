@@ -4,6 +4,7 @@
 #include "Asteroid.h"
 #include "ObjectManager.h"
 #include "SystemManager.h"
+#include "UIControll.h"
 #include <memory> 
 
 namespace astro
@@ -18,6 +19,7 @@ namespace astro
 
 	private:
 		std::shared_ptr<Player> player;
+		std::shared_ptr<UIControll> uiControll;
 
 		std::unique_ptr<ObjectManager> starManager;
 		std::unique_ptr<ObjectManager> asteroidManager;

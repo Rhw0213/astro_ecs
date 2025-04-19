@@ -23,9 +23,17 @@ namespace astro
 		asteroidManager = std::make_unique<ObjectManager>();
 		systemManager = std::make_unique<SystemManager>();
 
+		//UI
+		uiControll = std::make_shared<UIControll>();
+		systemManager.get()->RegisterObjectOfSystem(
+			{	
+				SystemManager::RENDER_SYSTEM,
+			}, uiControll);
+
+		uiControll->Init();
+
 		// PLAYER
 		player = std::make_shared<Player>(MyVector2{ SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f });
-		player.get()->Init();
 
 		systemManager.get()->RegisterObjectOfSystem(
 			{	
@@ -35,6 +43,8 @@ namespace astro
 				SystemManager::CAMERA_SYSTEM,
 				SystemManager::ROTATION_SYSTEM,
 			}, player);
+
+		player.get()->Init();
 
 		// STAR
 		for (size_t i = 0; i < 200; i++)

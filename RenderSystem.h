@@ -1,7 +1,8 @@
 #pragma once
 #include "Component.h"
 #include "System.h"
-
+#include "UI.h"
+#include <vector>
 namespace astro
 {
 	class RenderSystem : public System
@@ -9,5 +10,8 @@ namespace astro
 	public:
 		void Init() override;
 		void Process() override;
+	private:
+		std::vector<std::shared_ptr<UI>> uiObjects;
+		std::vector<std::shared_ptr<Object>> cameraObjects;
 	};
 }
